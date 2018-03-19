@@ -1,4 +1,4 @@
-## Golf Club Management System
+## GCMS
 
 A Management System
 

@@ -11,14 +11,18 @@ frappe.ui.form.on('Golfer Profile', {
 	validate: function(frm){
 		if(frm.doc.title)
 			frm.doc.fullname = frm.doc.title + " ";
-
-		frm.doc.fullname += frm.doc.lastname + ", " + frm.doc.firstname;
+		
+		if(frm.doc.firstname)
+			frm.doc.fullname += frm.doc.firstname		
 
 		if(frm.doc.middlename)
 			frm.doc.fullname += " " + frm.doc.middlename;
 
+		if(frm.doc.lastname)
+			frm.doc.fullname += " " + frm.doc.lastname
+
 		if(frm.doc.suffix_name)
-			frm.doc.fullname += " " + frm.doc.suffix_name;
+			frm.doc.fullname += ", " + frm.doc.suffix_name;
 	},
 	marital_status: function(frm){
 		frm.set_df_property("spouse", "hidden", frm.doc.marital_status != "Married");
