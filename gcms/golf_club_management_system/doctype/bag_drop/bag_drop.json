@@ -251,7 +251,7 @@
    "read_only": 1, 
    "remember_last_selected_value": 0, 
    "report_hide": 0, 
-   "reqd": 1, 
+   "reqd": 0, 
    "search_index": 0, 
    "set_only_once": 0, 
    "unique": 0
@@ -282,7 +282,7 @@
    "read_only": 1, 
    "remember_last_selected_value": 0, 
    "report_hide": 0, 
-   "reqd": 1, 
+   "reqd": 0, 
    "search_index": 0, 
    "set_only_once": 0, 
    "unique": 0
@@ -298,7 +298,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2018-03-19 11:39:43.688707", 
+ "modified": "2018-03-20 13:30:01.477903", 
  "modified_by": "Administrator", 
  "module": "Golf Club Management System", 
  "name": "Bag Drop", 
