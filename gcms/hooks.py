@@ -24,6 +24,7 @@ app_include_js = "/assets/gcms/js/gcms.js"
 
 # include js in page
 # page_js = {"page" : "public/js/file.js"}
+page_js = {"pos" : "public/js/pos_page_custom_js.js", "point-of-sale": "public/js/pos_page_custom_js.js"}
 
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
