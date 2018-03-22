@@ -12,8 +12,9 @@ frappe.ui.form.on('Members', {
 				},
 				callback: function(res){
 					$(cur_frm.fields_dict.photo.wrapper).find("div.missing-image").addClass("hidden");
-					$(cur_frm.fields_dict.photo.wrapper).first().append("<img class='golfer-image' src=" + res.message.photo + "/>");
-					cur_frm.set_value("player_class", res.message.player_class);
+					if($(".golfer-image").length < 1){						
+						$(cur_frm.fields_dict.photo.wrapper).first().append("<img class='golfer-image' src=" + res.message.photo + "/>");
+					}					
 				}
 			});
 		}
@@ -25,5 +26,18 @@ frappe.ui.form.on('Members', {
 				$("div.missing-image").removeClass("hidden");
 			}
 		}
+	},
+	golfer_profile: function(frm){
+		frappe.call({
+			method: "frappe.client.get",
+			args: {
+				doctype: "Golfer Profile",
+				name: frm.doc.golfer_profile
+			},
+			callback: function(res){				
+				cur_frm.set_value("player_class", res.message.player_class);
+				cur_frm.set_value("golfer_name", res.message.fullname);
+			}
+		});
 	}
 });
