@@ -11,21 +11,14 @@ frappe.ui.form.on('Members', {
 					name: frm.doc.golfer_profile
 				},
 				callback: function(res){
-					$(cur_frm.fields_dict.photo.wrapper).find("div.missing-image").addClass("hidden");
-					if($(".golfer-image").length < 1){						
-						$(cur_frm.fields_dict.photo.wrapper).first().append("<img class='golfer-image' src=" + res.message.photo + "/>");
-					}					
+					console.log(res);		
+					frm.set_value("photo", res.message.photo);							
 				}
 			});
 		}
 	},
 	onload_post_render: function(frm){
-		if(frm.doc.__islocal){
-			if($(".golfer-image").length > 0){
-				$(".golfer-image").remove();
-				$("div.missing-image").removeClass("hidden");
-			}
-		}
+		
 	},
 	golfer_profile: function(frm){
 		frappe.call({
