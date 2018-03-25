@@ -73,6 +73,7 @@ try{
 					callback: function(res){
 						var cust = res.message;
 						me.cart.customer_field.set_value(cust.customer_name);
+						me.frm.doc.daycard_id = id;
 						//wrap.find('.customer-field').find('input[data-fieldname="customer"]').val(cust.customer_name);
 					}
 				});

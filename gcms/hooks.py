@@ -121,3 +121,13 @@ page_js = {"pos" : "public/js/pos_page_custom_js.js", "point-of-sale": "public/j
 # 	"frappe.desk.doctype.event.event.get_events": "gcms.event.get_events"
 # }
 
+fixtures = [
+	{
+		"dt":"Custom Field",
+		"filters":[
+			["name", "in", [
+				"Sales Invoice-daycard_id"
+			]]
+		]
+	}
+]
