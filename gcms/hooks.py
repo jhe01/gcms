@@ -27,6 +27,8 @@ app_include_js = "/assets/gcms/js/gcms.js"
 page_js = {"pos" : "public/js/pos_page_custom_js.js", "point-of-sale": "public/js/pos_page_custom_js.js"}
 
 # include js in doctype views
+doctype_js = {"Sales Invoice" : "public/js/sales_invoice.js"}
+doctype_list_js = {"Sales Invoice" : "public/js/sales_invoice_list.js"}
 # doctype_js = {"doctype" : "public/js/doctype.js"}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
