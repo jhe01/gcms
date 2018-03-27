@@ -34,7 +34,12 @@ frappe.ui.form.on('Daily Players', {
 			frm.add_custom_button("Transactions", function(){
 				frappe.route_options = {"daycard_id": doc.daycard_id, "posting_date": doc.fd_time_in};
 				frappe.set_route("List", "Sales Invoice");
-			});	
+			}, __("View"));	
+
+			frm.add_custom_button("Starter", function(){
+				frappe.route_options = {"daycard_id": doc.daycard_id, "tee_off_time": doc.tee_off};
+				frappe.set_route("List", "Starter");
+			}, __("View"));	
 		}
 
 		if(frm.doc.allocated_credit){
@@ -113,7 +118,7 @@ var invoiceSection = {
 		$(".invoice-table-section").find(".section-body>.form-column").append(table);
 	},
 	makeTable: () => {
-		var table = $("<table class='table table-condensed invoice-table'></table>");
+		var table = $("<table class='table table-bordered invoice-table'></table>");
 		return table;
 	},
 	makeTableHeader: () => {
@@ -130,9 +135,9 @@ var invoiceSection = {
 
 		$.each(data, (key, val) => {
 			var row = $("<tr data-invoice=" + val.name + "></tr>");
-			row.append("<td><span class='invoice-link grey'>" + val.name + "</span></td>");
+			row.append("<td><span class='invoice-link grey' style='cursor:pointer;'>" + val.name + "</span></td>");
 			row.append("<td>" + val.posting_date + "</td>");
-			row.append("<td>" + val.total + "</td>");
+			row.append("<td>" + val.total.toFixed(2) + "</td>");
 			body.append(row);
 		});
 
