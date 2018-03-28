@@ -8,9 +8,8 @@ frappe.ui.form.on('Daily Players', {
 		frm.set_df_property("remaining_credit", "read_only", frm.doc.__islocal?1:0);
 		frm.set_df_property("allocated_credit", "read_only", frm.doc.__islocal?1:0);
 		frm.set_df_property("total_credit", "read_only", frm.doc.__islocal?1:0);
+		
 		if(!frm.doc.__islocal){
-			var transDate = moment(doc.fd_time_in).format("MM-DD-YYYY");
-
 			frappe.call({
 				method: 'gcms.api.gcms_get_daycard_invoices',
 				args: {
@@ -18,8 +17,7 @@ frappe.ui.form.on('Daily Players', {
 					"date": frm.doc.fd_time_in
 				},
 				callback: function(res){
-					var cust = res.message;	
-					console.log(cust);
+					var cust = res.message;					
 					var remainingCredit = 0;
 					var totalExpenses = 0;
 					$.each(cust, (key, val) => {
@@ -28,6 +26,13 @@ frappe.ui.form.on('Daily Players', {
 					remainingCredit = getTotalCredit(frm.doc.allocated_credit) - totalExpenses;
 					frm.set_value("remaining_credit", remainingCredit == 0.00?getTotalCredit(frm.doc.allocated_credit):remainingCredit);
 					invoiceSection.init($(".empty-section"), cust);
+
+					if(cust.length > 0){
+						frm.add_custom_button("Make Consolidated Sales Invoice", function(){
+							frm.trigger('make_invoice');
+						});	
+					}
+
 				}
 			});
 
@@ -40,11 +45,13 @@ frappe.ui.form.on('Daily Players', {
 				frappe.route_options = {"daycard_id": doc.daycard_id, "tee_off_time": doc.tee_off};
 				frappe.set_route("List", "Starter");
 			}, __("View"));	
+			
 		}
-
 		if(frm.doc.allocated_credit){
 			frm.set_value("total_credit", getTotalCredit(frm.doc.allocated_credit));
 		}
+
+		
 	},
 	is_active: (frm) => {		
 		if(frm.doc.is_active){
@@ -71,6 +78,19 @@ frappe.ui.form.on('Daily Players', {
 	},
 	onload_post_render: (frm) => {
 		
+	},
+	make_invoice: (frm) => {
+		frappe.call({
+			method: "gcms.api.gcms_get_si_items",
+			args: {
+				"daycard": frm.doc.daycard_id,
+				"date": frm.doc.fd_time_in,
+			},
+			callback: function(res){	
+				frappe.model.sync(res.message);	
+				frappe.set_route("Form", res.message.doctype, res.message.name);
+			}
+		});
 	}
 });
 
