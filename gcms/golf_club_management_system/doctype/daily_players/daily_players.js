@@ -32,7 +32,6 @@ frappe.ui.form.on('Daily Players', {
 							frm.trigger('make_invoice');
 						});	
 					}
-
 				}
 			});
 
