@@ -8,7 +8,7 @@ frappe.ui.form.on('Daily Players', {
 		frm.set_df_property("remaining_credit", "read_only", frm.doc.__islocal?1:0);
 		frm.set_df_property("allocated_credit", "read_only", frm.doc.__islocal?1:0);
 		frm.set_df_property("total_credit", "read_only", frm.doc.__islocal?1:0);
-		
+		console.log(frm.doc.daycard_id + " " + frm.doc.fd_time_in);
 		if(!frm.doc.__islocal){
 			frappe.call({
 				method: 'gcms.api.gcms_get_daycard_invoices',
@@ -17,17 +17,17 @@ frappe.ui.form.on('Daily Players', {
 					"date": frm.doc.fd_time_in
 				},
 				callback: function(res){
-					var cust = res.message;					
+					var r = res.message;					
 					var remainingCredit = 0;
 					var totalExpenses = 0;
-					$.each(cust, (key, val) => {
+					$.each(r, (key, val) => {
 						totalExpenses = totalExpenses + val.total;
 					});
 					remainingCredit = getTotalCredit(frm.doc.allocated_credit) - totalExpenses;
 					frm.set_value("remaining_credit", remainingCredit == 0.00?getTotalCredit(frm.doc.allocated_credit):remainingCredit);
-					invoiceSection.init($(".empty-section"), cust);
+					invoiceSection.init($(".empty-section"), r);
 
-					if(cust.length > 0){
+					if(r.length > 0){
 						frm.add_custom_button("Make Consolidated Sales Invoice", function(){
 							frm.trigger('make_invoice');
 						});	

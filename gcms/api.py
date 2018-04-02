@@ -26,22 +26,26 @@ def gcms_get_si_items(daycard, date):
 
 	if(len(invoices_name) > 0):
 		for x in range(len(invoices_name)):
-		si_items = frappe.get_list("Sales Invoice Item", filters={'parent': invoices_name[x]}, fields=["item_code","qty", "rate", "amount"])
-		#items = {}
-		for i in range(len(si_items)):
-			target.append('items', {
-				'item_code': si_items[i].item_code,
-				'qty': si_items[i].qty,
-				'rate': si_items[i].rate,
-				'amount': si_items[i].amount
-			})
+			si_items = frappe.get_list("Sales Invoice Item",
+				filters={'parent': invoices_name[x]},
+				fields=["item_code","qty", "rate", "amount"])
+
+			for i in range(len(si_items)):
+				target.append('items', {
+					'item_code': si_items[i].item_code,
+					'qty': si_items[i].qty,
+					'rate': si_items[i].rate,
+					'amount': si_items[i].amount
+				})
 
 	target.run_method("set_missing_values")
 	return target
 
 def get_invoices_items(daycard, date):
 	new_date = frappe.utils.data.getdate(date)
-	invoices = frappe.get_list("Sales Invoice", filters={'daycard_id': daycard, 'posting_date': new_date}, fields=['name', 'posting_date', 'daycard_id', 'total'])
+	invoices = frappe.get_list("Sales Invoice",
+		filters={'daycard_id': daycard, 'posting_date': new_date},
+		fields=['name', 'posting_date', 'daycard_id', 'total'])
 
 	return invoices
 
